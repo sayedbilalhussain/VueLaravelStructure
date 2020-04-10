@@ -93,7 +93,7 @@
           align="center"
         >
           <v-col class="shrink">
-            bilal
+          
           </v-col>
         </v-row>
       </v-container>

@@ -19944,11 +19944,7 @@ var render = function() {
               _c(
                 "v-row",
                 { attrs: { justify: "center", align: "center" } },
-                [
-                  _c("v-col", { staticClass: "shrink" }, [
-                    _vm._v("\n           bilal\n         ")
-                  ])
-                ],
+                [_c("v-col", { staticClass: "shrink" })],
                 1
               )
             ],
@@ -20047,7 +20043,7 @@ var render = function() {
                                     attrs: {
                                       label: "Login",
                                       name: "login",
-                                      "prepend-icon": "mdi-person",
+                                      "prepend-icon": "mdi-account-box",
                                       type: "text"
                                     }
                                   }),

@@ -28,7 +28,7 @@
                   <v-text-field
                     label="Login"
                     name="login"
-                    prepend-icon="mdi-person"
+                    prepend-icon="mdi-account-box"
                     type="text"
                   />
 
