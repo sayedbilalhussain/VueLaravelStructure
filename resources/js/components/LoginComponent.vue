@@ -27,15 +27,17 @@
                 <v-form>
                   <v-text-field
                     label="Login"
-                    name="login"
+                    name="email"
+                    v-model="email"
                     prepend-icon="mdi-account-box"
-                    type="text"
+                    type="email"
                   />
 
                   <v-text-field
                     id="password"
                     label="Password"
                     name="password"
+                    v-model="password"
                     prepend-icon="mdi-lock"
                     type="password"
                   />
@@ -43,7 +45,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -55,9 +57,17 @@
 </template>
 <script>
 export default {
-    props: {
-      source: String,
+    data(){
+       return{
+         password:'',
+          email:'',
+       } 
     },
+    methods:{
+      login: function() {
+        localStorage.setItem('token','asd;lk1212');
+      },
+    }
 }
 </script>
 <style scoped>
