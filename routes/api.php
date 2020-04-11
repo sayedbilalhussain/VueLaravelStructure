@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'auth','name'=>'admin'] ,function(){
+Route::group(['prefix'=>'auth','name'=>'auth'] ,function(){
     Route::post('login','Api\UserController@login');
 });

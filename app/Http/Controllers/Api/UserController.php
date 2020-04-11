@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\User;
 use Hash;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,11 +18,11 @@ class UserController extends Controller
             $user = auth()->user();
             $accessToken = auth()->user()->createToken('authToken')->accessToken;
             return response()->json([
-                'success'=>'logged In Successfully.'       
+                'token'=> $accessToken       
             ],200);
         }else{
             return response()->json([
-                'error'=>'Credentials Not Matched'       
+                'retErrMessage'=>'Credentials Not Matched'       
             ],400);
         } 
     }

@@ -24,6 +24,13 @@
                 
               </v-toolbar>
               <v-card-text>
+                <v-progress-linear
+                  :active="loading"
+                  :indeterminate="loading"
+                  absolute
+                  top
+                  color="deep-purple accent-4"
+                ></v-progress-linear>
                 <v-form>
                   <v-text-field
                     label="Login"
@@ -48,6 +55,18 @@
                 <v-btn color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
+            <v-snackbar
+              v-model="snackbar"
+            >
+              {{ text }}
+              <v-btn
+                color="pink"
+                text
+                @click="snackbar = false"
+              >
+                Close
+              </v-btn>
+            </v-snackbar>
           </v-col>
         </v-row>
       </v-container>
@@ -60,12 +79,45 @@ export default {
     data(){
        return{
          password:'',
-          email:'',
+         email:'',
+         loading:false,
+         snackbar:false,
+         text:'',
        } 
     },
     methods:{
       login: function() {
-        localStorage.setItem('token','asd;lk1212');
+
+          axios.interceptors.request.use( (config)  => {
+              this.loading = true;
+              return config;
+            }, (error) => {
+              this.loading = false;
+              return Promise.reject(error);
+            });
+
+          axios.interceptors.response.use( (response) => {
+              this.loading = false;
+              return response;
+            }, (error)  => {
+              this.loading = false;
+              return Promise.reject(error);
+            });
+
+            axios.post('/api/auth/login',{
+              'password':this.password,
+              'email': this.email
+            })
+            .then(res => {
+              // console.log(res);
+              localStorage.setItem('token',res.data.token);
+            })
+            .catch(err => {
+              // console.log(err);
+              this.text = err.response.data.retErrMessage;
+              this.snackbar = true;
+              // console.log(err.response.data.retErrMessage);
+            })
       },
     }
 }
