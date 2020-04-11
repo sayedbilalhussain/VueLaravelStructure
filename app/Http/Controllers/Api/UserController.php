@@ -16,7 +16,9 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $user = auth()->user();
             $accessToken = auth()->user()->createToken('authToken')->accessToken;
-            return $accessToken;
+            return response()->json([
+                'success'=>'logged In Successfully.'       
+            ],200);
         }else{
             return response()->json([
                 'error'=>'Credentials Not Matched'       

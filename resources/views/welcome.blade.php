@@ -7,13 +7,13 @@
         <title>LaraVue</title>
 
         <!-- Fonts -->
-         <link rel="stylesheet" href="{{asset('css/app.css')}}">
+         <link rel="stylesheet" href="{{asset('public/css/app.css')}}">
 
     </head>
     <body>
       <div id="app">
        <app-component></app-component>
       </div>
-        <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+        <script type="text/javascript" src="{{asset('public/js/app.js')}}"></script>
     </body>
 </html>
