@@ -109,15 +109,14 @@ export default {
               'email': this.email
             })
             .then(res => {
-              // console.log(res);
               localStorage.setItem('token',res.data.token);
+              this.$router.push('/admin').then(res => console.log('loggedIn')).catch(err => console.log(err))
+
             })
             .catch(err => {
-              // console.log(err);
               this.text = err.response.data.retErrMessage;
               this.snackbar = true;
-              // console.log(err.response.data.retErrMessage);
-            })
+            });
       },
     }
 }

@@ -93,7 +93,18 @@
           align="center"
         >
           <v-col class="shrink">
-          
+          <v-snackbar
+              v-model="snackbar"
+            >
+              You are successfully logged In.
+              <v-btn
+                color="pink"
+                text
+                @click="snackbar = false"
+              >
+                Close
+              </v-btn>
+            </v-snackbar>
           </v-col>
         </v-row>
       </v-container>
@@ -104,6 +115,7 @@
 export default {
     props: {
       source: String,
+      snackbar: false,
     },
     data: () => ({
       drawer: null,
@@ -124,6 +136,7 @@ export default {
     }),
     created () {
       this.$vuetify.theme.dark = true
+      this.snackbar = true
     },
 }
 </script>
