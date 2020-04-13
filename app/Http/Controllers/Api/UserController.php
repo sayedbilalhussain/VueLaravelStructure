@@ -26,4 +26,11 @@ class UserController extends Controller
             ],400);
         } 
     }
+
+    public function loggedOut(Request $request)
+    {
+        $request->user()->token()->revoke();
+
+        return $this->sendSuccess('Logged out successfully');
+    }
 }

@@ -45,11 +45,11 @@
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Browse Channels</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click="logout">
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-settings</v-icon>
           </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">Manage Subscriptions</v-list-item-title>
+          <v-list-item-title class="grey--text text--darken-1">LoggedOut</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -115,9 +115,9 @@
 export default {
     props: {
       source: String,
-      snackbar: false,
     },
     data: () => ({
+      snackbar: false,
       drawer: null,
       items: [
         { icon: 'mdi-trending-up', text: 'Most Popular' },
@@ -137,6 +137,26 @@ export default {
     created () {
       this.$vuetify.theme.dark = true
       this.snackbar = true
+    },
+    methods: {
+      logout: function(){
+        let acccessToken = localStorage.getItem('token');
+        if (acccessToken) {
+            window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + acccessToken;
+        }
+        axios.get('/api/auth/logged-out')
+        .then(res => {
+          localStorage.removeItem('token');
+          this.$router.push('/login')
+          .then(res => {
+            this.text = "You are logged out Successfully";
+            this.snackbar = true;
+          }).catch(err => console.log(err));
+
+        }).catch(err => {
+          console.log(err);
+        });
+      },
     },
 }
 </script>

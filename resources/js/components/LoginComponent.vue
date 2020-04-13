@@ -109,6 +109,7 @@ export default {
               'email': this.email
             })
             .then(res => {
+              localStorage.removeItem("token");
               localStorage.setItem('token',res.data.token);
               this.$router.push('/admin').then(res => console.log('loggedIn')).catch(err => console.log(err))
 
