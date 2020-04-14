@@ -138,6 +138,10 @@ export default {
       this.$vuetify.theme.dark = true
       this.snackbar = true
     },
+    mounted(){
+       this.snackbar = localStorage.getItem('loggedIn') ? true:false;
+       localStorage.removeItem('loggedIn');
+    },
     methods: {
       logout: function(){
         let acccessToken = localStorage.getItem('token');

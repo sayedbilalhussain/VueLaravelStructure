@@ -2067,6 +2067,10 @@ __webpack_require__.r(__webpack_exports__);
     this.$vuetify.theme.dark = true;
     this.snackbar = true;
   },
+  mounted: function mounted() {
+    this.snackbar = localStorage.getItem('loggedIn') ? true : false;
+    localStorage.removeItem('loggedIn');
+  },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -2201,6 +2205,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2208,7 +2219,16 @@ __webpack_require__.r(__webpack_exports__);
       email: '',
       loading: false,
       snackbar: false,
-      text: ''
+      text: '',
+      valid: true,
+      emailRules: [function (v) {
+        return !!v || 'E-mail is required';
+      }, function (v) {
+        return /.+@.+\..+/.test(v) || 'E-mail must be valid';
+      }],
+      passwordRules: [function (v) {
+        return !!v || 'Password is required';
+      }]
     };
   },
   methods: {
@@ -2235,6 +2255,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         localStorage.removeItem("token");
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('loggedIn', true);
 
         _this.$router.push('/admin').then(function (res) {
           return console.log('loggedIn');
@@ -20186,11 +20207,23 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "v-form",
+                                {
+                                  ref: "form",
+                                  model: {
+                                    value: _vm.valid,
+                                    callback: function($$v) {
+                                      _vm.valid = $$v
+                                    },
+                                    expression: "valid"
+                                  }
+                                },
                                 [
                                   _c("v-text-field", {
                                     attrs: {
                                       label: "Login",
                                       name: "email",
+                                      rules: _vm.emailRules,
+                                      required: "",
                                       "prepend-icon": "mdi-account-box",
                                       type: "email"
                                     },
@@ -20209,7 +20242,9 @@ var render = function() {
                                       label: "Password",
                                       name: "password",
                                       "prepend-icon": "mdi-lock",
-                                      type: "password"
+                                      type: "password",
+                                      required: "",
+                                      rules: _vm.passwordRules
                                     },
                                     model: {
                                       value: _vm.password,
@@ -20234,7 +20269,10 @@ var render = function() {
                               _c(
                                 "v-btn",
                                 {
-                                  attrs: { color: "primary" },
+                                  attrs: {
+                                    disabled: !_vm.valid,
+                                    color: "primary"
+                                  },
                                   on: { click: _vm.login }
                                 },
                                 [_vm._v("Login")]

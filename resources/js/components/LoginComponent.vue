@@ -31,11 +31,16 @@
                   top
                   color="deep-purple accent-4"
                 ></v-progress-linear>
-                <v-form>
+                <v-form
+                ref="form"
+                v-model="valid"
+                >
                   <v-text-field
                     label="Login"
                     name="email"
                     v-model="email"
+                    :rules="emailRules"
+                    required
                     prepend-icon="mdi-account-box"
                     type="email"
                   />
@@ -47,12 +52,14 @@
                     v-model="password"
                     prepend-icon="mdi-lock"
                     type="password"
+                    required
+                    :rules="passwordRules"
                   />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="login">Login</v-btn>
+                <v-btn :disabled="!valid" color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
             <v-snackbar
@@ -83,6 +90,14 @@ export default {
          loading:false,
          snackbar:false,
          text:'',
+         valid:true,
+         emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+         ],
+         passwordRules: [
+          v => !!v || 'Password is required',
+         ],
        } 
     },
     methods:{
@@ -111,6 +126,7 @@ export default {
             .then(res => {
               localStorage.removeItem("token");
               localStorage.setItem('token',res.data.token);
+              localStorage.setItem('loggedIn',true);
               this.$router.push('/admin').then(res => console.log('loggedIn')).catch(err => console.log(err))
 
             })
