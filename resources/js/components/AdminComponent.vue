@@ -87,12 +87,6 @@
     </v-app-bar>
 
     <v-content>
-      <v-container class="fill-height">
-        <v-row
-          justify="center"
-          align="center"
-        >
-          <v-col class="shrink">
           <v-snackbar
               v-model="snackbar"
             >
@@ -105,7 +99,12 @@
                 Close
               </v-btn>
             </v-snackbar>
-          </v-col>
+      <v-container class="">
+        <v-row
+          justify="center"
+          align="center"
+        >
+        <router-view></router-view>
         </v-row>
       </v-container>
     </v-content>
